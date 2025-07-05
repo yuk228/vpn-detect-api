@@ -24,7 +24,7 @@ GET /api/{ipv4}
 
 **Example Request:**
 ```bash
-curl -X GET "https://vpn-detect-api.vercel.app/api/isvpn/1.1.1.1"
+curl -X GET "https://vpn-detect-api.vercel.app/api/1.1.1.1"
 ```
 
 ### Check Your Own IP Address
@@ -37,7 +37,7 @@ GET /api/
 
 **Example Request:**
 ```bash
-curl -X GET "https://vpn-detect-api.vercel.app/api/isvpn"
+curl -X GET "https://vpn-detect-api.vercel.app/api"
 ```
 
 ## 📋 Response Format
@@ -68,7 +68,7 @@ All responses are returned in JSON format with appropriate HTTP status codes.
 **Status Code:** `400 Bad Request`
 ```json
 {
-  "error": "Invalid IP address"
+  "error": "invalid ip address"
 }
 ```
 
@@ -76,26 +76,15 @@ All responses are returned in JSON format with appropriate HTTP status codes.
 **Status Code:** `404 Not Found`
 ```json
 {
-  "error": "ASN not found"
+  "error": "asn not found"
 }
 ```
 
 #### Rate Limit Exceeded
 **Status Code:** `429 Too Many Requests`
-```json
-{
-  "error": "Rate limit exceeded",
-  "retryAfter": 60
-}
-```
 
 #### Server Error
 **Status Code:** `500 Internal Server Error`
-```json
-{
-  "error": "Internal server error"
-}
-```
 
 
 ## 🔧 HTTP Status Codes
