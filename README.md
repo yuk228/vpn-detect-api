@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# VPN / Proxy / Hosting Detector
 
-First, run the development server:
+API for detecting VPN, proxy, and hosting services by IP address.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+
+## ⚠️ Rate Limits
+- **Limit:** 100 requests per 60 seconds
+- **Headers:** Rate limit info included in response headers
+
+## 📡 Endpoints
+
+### Check Specific IP Address
+
+```http
+GET /api/{ipv4}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Parameters:**
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `ipv4` | string | Yes | Valid IPv4 address to check |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Example Request:**
+```bash
+curl -X GET "https://vpn-detect-api.vercel.app/api/isvpn/1.1.1.1"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Check Your Own IP Address
 
-## Learn More
+```http
+GET /api/
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Description:** Automatically detects and checks the client's IP address
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Example Request:**
+```bash
+curl -X GET "https://vpn-detect-api.vercel.app/api/isvpn"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📋 Response Format
 
-## Deploy on Vercel
+All responses are returned in JSON format with appropriate HTTP status codes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ✅ Successful Responses
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### VPN/Proxy/Hosting Detected
+```json
+{
+  "ip": "1.2.3.4",
+  "isVpn": true
+}
+```
+
+#### Regular IP Address
+```json
+{
+  "ip": "1.2.3.4",
+  "isVpn": false
+}
+```
+
+### ❌ Error Responses
+
+#### Invalid IP Address
+**Status Code:** `400 Bad Request`
+```json
+{
+  "error": "Invalid IP address"
+}
+```
+
+#### ASN Not Found
+**Status Code:** `404 Not Found`
+```json
+{
+  "error": "ASN not found"
+}
+```
+
+#### Rate Limit Exceeded
+**Status Code:** `429 Too Many Requests`
+```json
+{
+  "error": "Rate limit exceeded",
+  "retryAfter": 60
+}
+```
+
+#### Server Error
+**Status Code:** `500 Internal Server Error`
+```json
+{
+  "error": "Internal server error"
+}
+```
+
+
+## 🔧 HTTP Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| `200` | Success |
+| `400` | Bad Request - Invalid IP format |
+| `404` | Not Found - ASN not found |
+| `429` | Too Many Requests - Rate limit exceeded |
+| `500` | Internal Server Error |
