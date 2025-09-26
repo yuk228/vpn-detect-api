@@ -11,7 +11,8 @@
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
-    "next": "15.3.5",
+    "next": "^15.5.4",
+    "pnpm": "^10.17.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
