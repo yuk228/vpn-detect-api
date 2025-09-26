@@ -1,11 +1,9 @@
-
 # VPN / Proxy / Hosting Detector
 
 API for detecting VPN, proxy, and hosting services by IP address.
 
-
-
 ## ⚠️ Rate Limits
+
 - **Limit:** 100 requests per 60 seconds
 - **Headers:** Rate limit info included in response headers
 
@@ -23,6 +21,7 @@ GET /api/{ipv4}
 | `ipv4` | string | Yes | Valid IPv4 address to check |
 
 **Example Request:**
+
 ```bash
 curl -X GET "https://vpn-detect-api.vercel.app/api/1.1.1.1"
 ```
@@ -36,6 +35,7 @@ GET /api/
 **Description:** Automatically detects and checks the client's IP address
 
 **Example Request:**
+
 ```bash
 curl -X GET "https://vpn-detect-api.vercel.app/api"
 ```
@@ -47,6 +47,7 @@ All responses are returned in JSON format with appropriate HTTP status codes.
 ### ✅ Successful Responses
 
 #### VPN/Proxy/Hosting Detected
+
 ```json
 {
   "ip": "1.2.3.4",
@@ -55,6 +56,7 @@ All responses are returned in JSON format with appropriate HTTP status codes.
 ```
 
 #### Regular IP Address
+
 ```json
 {
   "ip": "1.2.3.4",
@@ -65,7 +67,9 @@ All responses are returned in JSON format with appropriate HTTP status codes.
 ### ❌ Error Responses
 
 #### Invalid IP Address
+
 **Status Code:** `400 Bad Request`
+
 ```json
 {
   "error": "invalid ip address"
@@ -73,7 +77,9 @@ All responses are returned in JSON format with appropriate HTTP status codes.
 ```
 
 #### ASN Not Found
+
 **Status Code:** `404 Not Found`
+
 ```json
 {
   "error": "asn not found"
@@ -81,18 +87,19 @@ All responses are returned in JSON format with appropriate HTTP status codes.
 ```
 
 #### Rate Limit Exceeded
+
 **Status Code:** `429 Too Many Requests`
 
 #### Server Error
-**Status Code:** `500 Internal Server Error`
 
+**Status Code:** `500 Internal Server Error`
 
 ## 🔧 HTTP Status Codes
 
-| Status Code | Description |
-|-------------|-------------|
-| `200` | Success |
-| `400` | Bad Request - Invalid IP format |
-| `404` | Not Found - ASN not found |
-| `429` | Too Many Requests - Rate limit exceeded |
-| `500` | Internal Server Error |
+| Status Code | Description                             |
+| ----------- | --------------------------------------- |
+| `200`       | Success                                 |
+| `400`       | Bad Request - Invalid IP format         |
+| `404`       | Not Found - ASN not found               |
+| `429`       | Too Many Requests - Rate limit exceeded |
+| `500`       | Internal Server Error                   |
